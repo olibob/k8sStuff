@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: sonarr
+  name: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+      - image: linuxserver/sonarr
+        name: sonarr
+        volumeMounts:
+          - mountPath: /config
+            name: config
+          - mountPath: /etc/localtime
+            name: localtime
+            readOnly: true
+          - mountPath: /dls
+            name: sabnzbddls
+        ports:
+          - containerPort: 8989
+        env:
+          - name: TZ
+            value: "Europe/Paris"
+          # Make sure volumes are accessible!
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: sonarrclaim
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File
+        - name: sabnzbddls
+          persistentVolumeClaim:
+            claimName: sabclaim
