@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sabnzbd
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: sabnzbd.wastedbits.org
+    http:
+      paths:
+      - backend:
+          serviceName: sabnzbd
+          servicePort: 8080

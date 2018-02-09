@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: sabnzbd
+  name: sabnzbd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sabnzbd
+  template:
+    metadata:
+      labels:
+        app: sabnzbd
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - image: olibob/sabnzbd
+        name: sabnzbd
+        volumeMounts:
+          - mountPath: /dls
+            name: dl
+          - mountPath: /datadir
+            name: data
+        ports:
+          - containerPort: 8080
+      initContainers:
+      - name: install
+        image: busybox
+        command:
+        - touch
+        - "/work-dir/sabnzbd.ini"
+        volumeMounts:
+          - name: data
+            mountPath: "/work-dir"
+      volumes:
+        - name: dl
+          persistentVolumeClaim:
+            claimName: sabclaim
+        - name: data
+          persistentVolumeClaim:
+            claimName: sabdataclaim
