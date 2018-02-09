@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: radarr
+  name: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+      - image: linuxserver/radarr
+        name: radarr
+        ports:
+          - containerPort: 7878
+        volumeMounts:
+          - mountPath: /config
+            name: data
+            subPath: config
+          - mountPath: /downloads
+            name: data
+            subPath: downloads
+          - mountPath: /movies
+            name: data
+            subPath: movies
+          - mountPath: /dls
+            name: sabnzbddls
+        env:
+          - name: TZ
+            value: "Europe/Paris"
+            # Make sure volumes are accessible!
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+      initContainers:
+      - name: folders
+        image: busybox
+        command:
+        - mkdir
+        - "-p"
+        - "/data/config"
+        - "/data/downloads"
+        - "/data/movies"
+        volumeMounts:
+          - name: data
+            mountPath: "/data"  
+      - name: owner
+        image: busybox
+        command:
+        - chown
+        - "-R"
+        - "1000:1000"
+        - "/data/"
+        volumeMounts:
+          - name: data
+            mountPath: "/data"
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: radarrclaim
+      - name: sabnzbddls
+        persistentVolumeClaim:
+          claimName: sabclaim
