@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: headphones
+spec:
+  selector:
+    app: headphones
+  ports:
+  - protocol: TCP
+    port: 8181

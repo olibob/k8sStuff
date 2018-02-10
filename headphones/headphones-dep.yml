@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: headphones
+  name: headphones
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: headphones
+  template:
+    metadata:
+      labels:
+        app: headphones
+    spec:
+      containers:
+      - image: linuxserver/headphones:107
+        name: headphones
+        env:
+          - name: TZ
+            value: "Europe/Paris"
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+        ports:
+          - containerPort: 8181
+        volumeMounts:
+          - mountPath: /config
+            name: data
+            subPath: config
+          - mountPath: /downloads
+            name: data
+            subPath: downloads
+          - mountPath: / music
+            name: data
+            subPath: music
+          - mountPath: /dls
+            name: sabnzbddls
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: headphonesclaim
+        - name: sabnzbddls
+          persistentVolumeClaim:
+            claimName: sabclaim

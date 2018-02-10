@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: headphones
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: headphones.wastedbits.org
+    http:
+      paths:
+      - backend:
+          serviceName: headphones
+          servicePort: 8181
