@@ -27,7 +27,7 @@ spec:
             name: data
             subPath: downloads
           - mountPath: /movies
-            name: data
+            name: plex
             subPath: movies
           - mountPath: /dls
             name: sabnzbddls
@@ -68,3 +68,6 @@ spec:
       - name: sabnzbddls
         persistentVolumeClaim:
           claimName: sabclaim
+      - name: plex
+        persistentVolumeClaim:
+          claimName: plexserverclaim

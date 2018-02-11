@@ -23,6 +23,9 @@ spec:
           - mountPath: /etc/localtime
             name: localtime
             readOnly: true
+          - mountPath: /config/tv
+            name: plex
+            subPath: series
           - mountPath: /dls
             name: sabnzbddls
         ports:
@@ -46,3 +49,6 @@ spec:
         - name: sabnzbddls
           persistentVolumeClaim:
             claimName: sabclaim
+        - name: plex
+          persistentVolumeClaim:
+            claimName: plexserverclaim
