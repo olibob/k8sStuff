@@ -18,8 +18,8 @@ Master:
   UseSecurity: true
   AdminUser: admin
   # AdminPassword: <defaults to random>
-  Cpu: "200m"
-  Memory: "256Mi"
+  Cpu: "1"
+  Memory: "1024Mi"
   # Set min/max heap here if needed with:
   # JavaOpts: "-Xms512m -Xmx512m"
   # JenkinsOpts: ""
@@ -58,7 +58,7 @@ Master:
   InstallPlugins:
     - kubernetes:1.3.1
     - workflow-aggregator:2.5
-    - workflow-job:2.15
+    - workflow-job:2.17
     - credentials-binding:1.15
     - git:3.8.0
     - blueocean:1.4.2
@@ -112,7 +112,7 @@ Agent:
   # Allowed types are: ConfigMap, EmptyDir, HostPath, Nfs, Pod, Secret
   # Configure the attributes as they appear in the corresponding Java class for that type
   # https://github.com/jenkinsci/kubernetes-plugin/tree/master/src/main/java/org/csanchez/jenkins/plugins/kubernetes/volumes
-  volumes:
+  # volumes:
   # - type: Secret
   #   secretName: mysecret
   #   mountPath: /var/myapp/mysecret
