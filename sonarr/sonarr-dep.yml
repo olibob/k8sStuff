@@ -15,7 +15,7 @@ spec:
         app: sonarr
     spec:
       containers:
-      - image: linuxserver/sonarr
+      - image: linuxserver/sonarr:132
         name: sonarr
         volumeMounts:
           - mountPath: /config
