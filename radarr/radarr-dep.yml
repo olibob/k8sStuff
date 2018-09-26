@@ -15,7 +15,7 @@ spec:
         app: radarr
     spec:
       containers:
-      - image: linuxserver/radarr:108
+      - image: linuxserver/radarr:131
         name: radarr
         ports:
           - containerPort: 7878
