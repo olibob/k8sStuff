@@ -1,8 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: sabdataclaim
+  name: sabnzbd-config
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
@@ -11,4 +12,4 @@ spec:
       storage: 100Mi
   selector:
     matchLabels:
-      nzbstorage: "yes"
+      vol: sabnsbd-config
