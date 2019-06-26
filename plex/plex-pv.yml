@@ -3,8 +3,9 @@ kind: PersistentVolume
 metadata:
   name: plexserver
   labels:
-    app: plexserver
+    vol: plexserver
 spec:
+  storageClassName: manual
   capacity:
     storage: 1500Gi
   volumeMode: Filesystem

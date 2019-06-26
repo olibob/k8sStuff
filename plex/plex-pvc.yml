@@ -1,8 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: plexserverclaim
+  name: plexserver
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteMany
   volumeMode: Filesystem
@@ -11,4 +12,4 @@ spec:
       storage: 1500Gi
   selector:
     matchLabels:
-      app: plexserver
+      vol: plexserver
