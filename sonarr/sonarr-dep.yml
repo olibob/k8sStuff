@@ -15,7 +15,7 @@ spec:
         app: sonarr
     spec:
       containers:
-      - image: linuxserver/sonarr:155
+      - image: linuxserver/sonarr:2.0.0.5322-ls22
         name: sonarr
         volumeMounts:
           - mountPath: /config
@@ -41,14 +41,14 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: sonarrclaim
+            claimName: sonarr
         - name: localtime
           hostPath:
             path: /etc/localtime
             type: File
         - name: sabnzbddls
           persistentVolumeClaim:
-            claimName: sabclaim
+            claimName: sabnzbd-data
         - name: plex
           persistentVolumeClaim:
-            claimName: plexserverclaim
+            claimName: plexserver

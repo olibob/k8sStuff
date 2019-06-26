@@ -1,14 +1,15 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: sonarrclaim
+  name: sonarr
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 500Mi
+      storage: 200Mi
   selector:
     matchLabels:
-      sonarrstorage: "yes"
+      vol: sonarr
