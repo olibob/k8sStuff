@@ -3,10 +3,11 @@ kind: PersistentVolume
 metadata:
   name: radarr
   labels:
-    radarrstorage: "yes"
+    vol: radarr
 spec:
+  storageClassName: manual
   capacity:
-    storage: 500Mi
+    storage: 200Mi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce

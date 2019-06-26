@@ -1,14 +1,15 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: radarrclaim
+  name: radarr
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 500Mi
+      storage: 200Mi
   selector:
     matchLabels:
-      radarrstorage: "yes"
+      vol: radarr
