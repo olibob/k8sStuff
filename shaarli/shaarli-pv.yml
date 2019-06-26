@@ -5,6 +5,7 @@ metadata:
   labels:
     app: shaarli
 spec:
+  storageClassName: manual
   capacity:
     storage: 100Mi
   volumeMode: Filesystem

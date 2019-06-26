@@ -1,8 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: shaarliclaim
+  name: shaarli
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
