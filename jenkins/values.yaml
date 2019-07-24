@@ -46,7 +46,7 @@ master:
   # a restart loop.  Likewise if you disable the non-Jenkins identity store and instead use the Jenkins internal one,
   # you should revert master.adminUser to your preferred admin user:
   adminUser: "admin"
-  # adminPassword: ""
+  adminPassword: "<your password here>"
   # adminSshKey: <defaults to auto-generated>
   # If CasC auto-reload is enabled, an SSH (RSA) keypair is needed.  Can either provide your own, or leave unconfigured to allow a random key to be auto-generated.
   # If you supply your own, it is recommended that the values file that contains your key not be committed to source control in an unencrypted format
@@ -260,8 +260,7 @@ master:
   # Node labels and tolerations for pod assignment
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#taints-and-tolerations-beta-feature
-  nodeSelector:
-    ci: 'yes'
+  nodeSelector: {}
   tolerations: []
   # Leverage a priorityClass to ensure your pods survive resource shortages
   # ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
@@ -346,11 +345,11 @@ agent:
   privileged: false
   resources:
     requests:
-      cpu: "200m"
-      memory: "256Mi"
+      cpu: "500m"
+      memory: "512Mi"
     limits:
-      cpu: "200m"
-      memory: "256Mi"
+      cpu: "500m"
+      memory: "512Mi"
   # You may want to change this to true while testing a new image
   alwaysPullImage: false
   # Controls how slave pods are retained after the Jenkins build completes
