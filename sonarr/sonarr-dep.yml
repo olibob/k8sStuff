@@ -15,7 +15,7 @@ spec:
         app: sonarr
     spec:
       containers:
-      - image: linuxserver/sonarr:2.0.0.5322-ls22
+      - image: linuxserver/sonarr:latest
         name: sonarr
         volumeMounts:
           - mountPath: /config
