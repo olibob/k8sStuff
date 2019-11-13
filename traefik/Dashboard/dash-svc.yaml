@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/probe: traefik
+  name: traefik-dashboard
+  labels:
+    app: traefik
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: traefik

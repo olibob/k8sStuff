@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ng-ingress
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`traefik.agilepartner.net`)
+      kind: Rule
+      services:
+        - name: ng
+          port: 80
+      middlewares:
+      - name: traefik-https-redirect

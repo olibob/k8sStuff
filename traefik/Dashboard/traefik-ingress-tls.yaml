@@ -1,0 +1,22 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-ingress-tls
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dash.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: traefik-dashboard
+          port: 8080
+      middlewares:
+        - name: traefik-auth
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"

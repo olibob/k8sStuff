@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ng-ingress-tls
+  namespace: default
+spec:
+  entryPoints:
+    - websecure 
+  routes:
+    - match: Host(`traefik.agilepartner.net`)
+      kind: Rule
+      services:
+        - name: ng
+          port: 80
+      middlewares:
+        - name: ng-auth
+  tls:
+    domains:
+      - main: "agilepartner.net"
+        sans: 
+          - "*.agilepartner.net"
