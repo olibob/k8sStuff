@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sabnzbd-ingress-tls
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`sabnzbd.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: sabnzbd
+          port: 8080
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"
