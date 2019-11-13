@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-ingress-tls
+  namespace: prometheus 
+spec:
+  entryPoints:
+    - websecure 
+  routes:
+    - match: Host(`prometheus.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: prometheus-server 
+          port: 80
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"
