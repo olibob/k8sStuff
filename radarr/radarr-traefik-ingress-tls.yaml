@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radarr-ingress-tls
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`radarr.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: radarr
+          port: 7878 
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"
