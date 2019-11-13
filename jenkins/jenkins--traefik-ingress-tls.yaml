@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jenkins-ingress-tls
+  namespace: jenkins 
+spec:
+  entryPoints:
+    - websecure 
+  routes:
+    - match: Host(`jenkins.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: jenkins
+          port: 8080
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"
