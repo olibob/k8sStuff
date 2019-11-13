@@ -1,0 +1,45 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: harbor-ingress-tls
+  namespace: harbor 
+spec:
+  entryPoints:
+    - websecure 
+  routes:
+    - match: Host(`harbor.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: harbor-harbor-portal
+          port: 80
+    - match: Host(`harbor.wastedbits.org`) && PathPrefix(`/c/`)
+      kind: Rule
+      services:
+      - name: harbor-harbor-core 
+        port: 80
+    - match: Host(`harbor.wastedbits.org`) && PathPrefix(`/api/`)
+      kind: Rule
+      services:
+      - name: harbor-harbor-core 
+        port: 80
+    - match: Host(`harbor.wastedbits.org`) && PathPrefix(`/v2/`)
+      kind: Rule
+      services:
+      - name: harbor-harbor-core 
+        port: 80
+    - match: Host(`harbor.wastedbits.org`) && PathPrefix(`/chartrepo/`)
+      kind: Rule
+      services:
+      - name: harbor-harbor-core
+        port: 80
+    - match: Host(`harbor.wastedbits.org`) && PathPrefix(`/service/`)
+      kind: Rule
+      services:
+      - name: harbor-harbor-core 
+        port: 80
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"
