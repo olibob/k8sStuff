@@ -159,6 +159,10 @@ spec:
       name: websecure
       port: 443
       targetPort: 4443
+    - protocol: TCP
+      name: ssh 
+      port: 10022
+      targetPort: 10022 
   selector:
     app: traefik
 ---
@@ -197,13 +201,18 @@ spec:
         - name: traefik
           image: traefik:v2.0
           env:
-          - name: GANDIV5_API_KEY 
-            value: "yZX1TikMVLMOCBQj9xb3OCPg"
+          - name: GANDIV5_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: gandi-api-key 
+                key: gandi-api-key
           ports:
             - name: web
               containerPort: 8000
             - name: websecure
               containerPort: 4443
+            - name: ssh
+              containerPort: 10022
           volumeMounts:
             - name: traefikconfdir
               mountPath: "/etc/traefik"
