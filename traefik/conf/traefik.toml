@@ -27,6 +27,8 @@
     address = ":8000"
   [entryPoints.websecure]
     address = ":4443"
+  [entryPoints.ssh]
+    address = ":10022"
 
 [certificatesResolvers.gandi.acme]
 
