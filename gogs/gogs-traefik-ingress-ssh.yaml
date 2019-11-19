@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: gogs-ingress-ssh
+spec:
+  entryPoints:
+    - ssh 
+  routes:
+    - match: HostSNI(`gogs.wastedbits.org`)
+      services:
+        - name: gogs-gogs 
+          port: 10022

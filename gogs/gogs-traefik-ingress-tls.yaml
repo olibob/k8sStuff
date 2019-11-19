@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gogs-ingress-tls
+spec:
+  entryPoints:
+    - websecure 
+  routes:
+    - match: Host(`gogs.wastedbits.org`)
+      kind: Rule
+      services:
+        - name: gogs-gogs 
+          port: 80
+  tls:
+    certResolver: gandi
+    domains:
+      - main: "wastedbits.org"
+        sans:
+          - "*.wastedbits.org"
