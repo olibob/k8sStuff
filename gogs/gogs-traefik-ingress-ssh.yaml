@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - ssh 
   routes:
-    - match: HostSNI(`gogs.wastedbits.org`)
+    - match: HostSNI(`*`)
       services:
         - name: gogs-gogs 
           port: 10022
