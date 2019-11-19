@@ -452,11 +452,14 @@ nodeExporter:
   ## Node tolerations for node-exporter scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   ##
-  tolerations: []
+  tolerations:
     # - key: "key"
     #   operator: "Equal|Exists"
     #   value: "value"
     #   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+    - key: "node-role.kubernetes.io/master"
+      operator: "Exists"
+      effect: "NoSchedule"
 
   ## Node labels for node-exporter pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -955,7 +958,7 @@ serverFiles:
 
   ## Alerts configuration
   ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
-  alerts: {}
+  alerts:
   # groups:
   #   - name: Instances
   #     rules:
@@ -967,6 +970,16 @@ serverFiles:
   #         annotations:
   #           description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
   #           summary: 'Instance {{ $labels.instance }} down'
+    groups:
+    - name: n3load 
+      rules:
+      - alert: HighLoadOnN3
+        expr: avg(node_load5{kubernetes_node="n3.wastedbits.org"}) /  count(count(node_cpu_seconds_total{kubernetes_node="n3.wastedbits.org"}) by (cpu)) * 100 > 80 
+        for: 5m
+        labels:
+          severity: page
+        annotations:
+          summary: "High load on node {{ $labels.instance }}" 
 
   rules: {}
 
@@ -1240,6 +1253,27 @@ serverFiles:
           - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]
             action: keep
             regex: traefik 
+
+      - job_name: 'prometheus-grafana'
+        honor_labels: true
+
+        kubernetes_sd_configs:
+          - role: service
+
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]
+            action: keep
+            regex: grafana 
+
+      - job_name: 'prometheus-nfs'
+        static_configs:
+          - targets:
+            - nfs.wastedbits.org:9100
+
+      - job_name: 'prometheus-opensense'
+        static_configs:
+          - targets:
+            - 192.168.2.1:9100
 
 # adds additional scrape configs to prometheus.yml
 # must be a string so you have to add a | after extraScrapeConfigs:
